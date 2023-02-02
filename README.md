@@ -32,6 +32,7 @@ You can see our main thread.
 Create and run a simple java calculator using Java Swing:
 package javathreads;
 
+```
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -82,9 +83,11 @@ public class DivisionWindow {
         new DivisionWindow();
     }
 }
+```
 
 This is a simple calculator that can only divide two numbers. We can increase its performance by delegating each division that is made to a new thread. Create a Thread object, pass the dividing function in its constructor and then call the start() function. 
 
+```
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -138,6 +141,7 @@ public class DivisionWindow {
         new DivisionWindow();
     }
 }
+```
 
 
 
