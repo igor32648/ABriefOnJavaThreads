@@ -7,14 +7,27 @@ execution according to the specified amount of time.
 
 JDK includes a graphical tool for monitoring java local and remote machines that is called jConsole. You can view information about the running threads there. To access it open the terminal application and type the command “jconsole”.
 
+![Image 2](assets/image2.png)
+
 jConsole first page:
+
+![Image 3](assets/image3.png)
 
 Access jConsole while the FristThread project is running on Eclipse.
 
+![Image 4](assets/image4.png)
+
 There is a tab to view information about threads.
+
+![Image 5](assets/image5.png)
+
 Here you can see all current threads.
 
+![Image 6](assets/image6.png)
+
 You can see our main thread.
+
+![Image 7](assets/image7.png)
 
 Create and run a simple java calculator using Java Swing:
 package javathreads;
