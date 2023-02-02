@@ -1,4 +1,8 @@
-You can use the Thread class to manipulate the current thread.
+#First Thread and jConsole
+
+In Java by default, a classic "public static void main(String[] args)" method uses a thread to be executed.
+
+You can manipulate the Thread class to manipulate this current thread.
 
 ![Image 1](assets/image1.png)
 
@@ -29,7 +33,9 @@ You can see our main thread.
 
 ![Image 7](assets/image7.png)
 
-Create and run a simple java calculator using Java Swing:
+#A simple divider using Threads
+
+Create and run a simple java divisor using Java Swing:
 package javathreads;
 
 ```
