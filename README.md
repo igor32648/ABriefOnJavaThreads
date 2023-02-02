@@ -1,8 +1,8 @@
-#First Thread and jConsole
+# First Thread and jConsole
 
 In Java by default, a classic "public static void main(String[] args)" method uses a thread to be executed.
 
-You can manipulate the Thread class to manipulate this current thread.
+You can use the Thread class to manipulate the current thread.
 
 ![Image 1](assets/image1.png)
 
@@ -33,11 +33,9 @@ You can see our main thread.
 
 ![Image 7](assets/image7.png)
 
-#A simple divider using Threads
+# A simple divider using Threads
 
-Create and run a simple java divisor using Java Swing:
-package javathreads;
-
+Create and run a simple java divider using Java Swing:
 ```
 import javax.swing.*;
 import java.awt.*;
@@ -90,6 +88,8 @@ public class DivisionWindow {
     }
 }
 ```
+
+![Image 8](assets/image8.png)
 
 This is a simple calculator that can only divide two numbers. We can increase its performance by delegating each division that is made to a new thread. Create a Thread object, pass the dividing function in its constructor and then call the start() function. 
 
@@ -148,6 +148,169 @@ public class DivisionWindow {
     }
 }
 ```
+# Using more than one thread at once
 
+The code below creates two methods and then executes both using one thread each.
+
+```
+package market;
+
+public class Market {
+
+	public void justLooking(String name) {
+		System.out.println(name + " has arrived");
+			System.out.println(name + " is enterig market");
+			System.out.println(name + " is going through shopping carts without picking one up");
+			System.out.println(name + " is walking around");
+
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			System.out.println(name + " is checking prices");
+			System.out.println(name + " is leaving");
+	}
+
+	public void buying(String name) {
+		System.out.println(name + " has arrived");
+			System.out.println(name + " is enterig market");
+			System.out.println(name + " is picking up a shopping cart");
+			System.out.println(name + " is walking around");
+			System.out.println(name + " is checking prices");
+
+			try {
+				Thread.sleep(30000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			System.out.println(name + " is picking up things to buy");
+			System.out.println(name + " is paying");
+			System.out.println(name + " is leaving");
+	}
+
+	public static void main(String[] args) {
+		Market market = new Market();
+		Thread client1Thread = new Thread(() -> {
+			String name = Thread.currentThread().getName();
+			market.justLooking(name);
+		}, "Sandra");
+
+		Thread client2Thread = new Thread(() -> {
+			String name = Thread.currentThread().getName();
+			market.buying(name);
+		}, "Paulo");
+		client1Thread.start();
+		client2Thread.start();
+	}
+}
+```
+The console output should be like this:
+```
+Sandra has arrived
+Sandra is enterig market
+Paulo has arrived
+Paulo is enterig market
+Sandra is going through shopping carts without picking one up
+Paulo is picking up a shopping cart
+Paulo is walking around
+Sandra is walking around
+Paulo is checking prices
+Sandra is checking prices
+Sandra is leaving
+Paulo is picking up things to buy
+Paulo is paying
+Paulo is leaving
+
+```
+Notice that both methods run at the same time. This behavior can be beneficial for your software by increasing its performance and decreasing the chances of it crashing.
+
+But beware!
+
+In our specific example, the two threads were created in a very simple way and are manipulating the same object (market) at the same time. This is not a good practice as it can lead to errors in the execution of the methods.
+
+# Synchronizing Threads
+
+We can solve the "multiple threads for 1 object" problem with the keyword "synchronized", like this:
+```
+package market;
+
+public class Market {
+
+	public void justLooking(String name) {
+		System.out.println(name + " has arrived");
+		synchronized (this) {
+			System.out.println(name + " is enterig market");
+			System.out.println(name + " is going through shopping carts without picking one up");
+			System.out.println(name + " is walking around");
+
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			System.out.println(name + " is checking prices");
+			System.out.println(name + " is leaving");
+		}
+	}
+
+	public void buying(String name) {
+		System.out.println(name + " has arrived");
+		synchronized (this) {
+			System.out.println(name + " is enterig market");
+			System.out.println(name + " is picking up a shopping cart");
+			System.out.println(name + " is walking around");
+			System.out.println(name + " is checking prices");
+
+			try {
+				Thread.sleep(30000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			System.out.println(name + " is picking up things to buy");
+			System.out.println(name + " is paying");
+			System.out.println(name + " is leaving");
+		}
+	}
+
+	public static void main(String[] args) {
+		Market market = new Market();
+		Thread client1Thread = new Thread(() -> {
+			String name = Thread.currentThread().getName();
+			market.justLooking(name);
+		}, "Sandra");
+
+		Thread client2Thread = new Thread(() -> {
+			String name = Thread.currentThread().getName();
+			market.buying(name);
+		}, "Paulo");
+		client1Thread.start();
+		client2Thread.start();
+	}
+}
+```
+The console outcome:
+```
+Sandra has arrived
+Sandra is enterig market
+Paulo has arrived
+Sandra is going through shopping carts without picking one up
+Sandra is walking around
+Sandra is checking prices
+Sandra is leaving
+Paulo is enterig market
+Paulo is picking up a shopping cart
+Paulo is walking around
+Paulo is checking prices
+```
+Notice that apart from the phrase "Paulo has arrived", which was not synchronized, the rest of the second trhead only runs when the execution of the first one ends.
 
 
